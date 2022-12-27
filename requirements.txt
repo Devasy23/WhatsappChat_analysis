@@ -3,3 +3,6 @@ numpy
 matplotlib
 plotly
 streamlit
+seaborn
+re
+sklearn
