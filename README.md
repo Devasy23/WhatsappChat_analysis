@@ -10,7 +10,9 @@ Analyze the sentiment of the messages using natural language processing techniqu
 Segment the chat into different conversations using clustering algorithms.
 View the most active users in each conversation.
 See a network analysis of the relationships between the participants in the chat group.
-Requirements
+
+
+## Requirements
 To run this app, you will need to have the following Python packages installed:
 
 pandas
@@ -20,12 +22,14 @@ plotly
 streamlit
 You can install all of these packages by running the following command:
 
-Copy code
+
 pip install -r requirements.txt
-Running the App
+
+
+## Running the App
 To run the app, navigate to the directory where the app is located and run the following command:
 
-Copy code
+
 streamlit run app.py
 This will start the app and open it in your web browser. Follow the instructions on the app to upload your WhatsApp chat file and start analyzing your chat data.
 
