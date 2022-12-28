@@ -9,7 +9,8 @@ import seaborn as sns
 import re
 from sklearn.cluster import DBSCAN
 
-
+def get_messages(cluster_number):
+    return df[df['Cluster']==cluster_number][['Sender', 'Message']]
 
 def process_chat_data(chat_data):
     
@@ -102,7 +103,8 @@ if uploaded_file is not None:
         clusternumber = xyz['Cluster'][0]
         time = df[df['Cluster']==clusternumber]['Date & Time'].min()
         fig = px.pie(xyz, values='Message', names='Sender', title='Most Active Users in Conversation Started at ' + str(time), hole=0.5)
-
+        if(st.button("Show Conversation " + str(clusternumber))):
+            st.write(get_messages(clusternumber))
         st.plotly_chart(fig, figure_options={'layout': {'width': 1000, 'height': 1000}})
 
 
