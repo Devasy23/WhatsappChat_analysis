@@ -22,11 +22,12 @@ def process_chat_data(chat_data):
     # Iterate through each line of the chat data
     for line in chat_data:
         # Use regular expressions to extract the date and time, sender, and message
-        # pattern = r'(\d+/\d+/\d+, \d+:\d+ [ap]m) - ([^:]+): (.*)'
-        pattern = r'(\d+/\d+/\d+, \d+:\d+ [apAP]m) - ([^:]+): (.*)'
+        pattern2 = r'(\d+/\d+/\d+, \d+:\d+ [ap]m) - ([^:]+): (.*)'
+        pattern1 = r'(\d+/\d+/\d+, \d+:\d+ [AP]M) - ([^:]+): (.*)'
 
         # Test the regular expression
-        match = re.match(pattern, line.decode('utf-8'))
+        match = re.match(pattern1, line.decode('utf-8'))
+        match2 = re.match(pattern2, line.decode('utf-8'))
         # print(match)
 
         if match:
@@ -37,6 +38,15 @@ def process_chat_data(chat_data):
             dates.append(date_time)
             senders.append(sender)
             messages.append(message)
+        if match2:
+            date_time = match2.group(1)
+            sender = match2.group(2)
+            message = match2.group(3)
+            # print(date_time, sender, message)
+            dates.append(date_time)
+            senders.append(sender)
+            messages.append(message)
+            
     
     # Create a dataframe from the lists
     df = pd.DataFrame({'Date & Time': dates, 'Sender': senders, 'Message': messages})
@@ -64,7 +74,7 @@ if uploaded_file is not None:
     df['Trivial Time'] = df['Date'] * 24 * 60 + df['Time']
 
     X = df[['Trivial Time']]
-    clustering = DBSCAN(eps=50, min_samples=25).fit(X, y=None, sample_weight=None)
+    clustering = DBSCAN(eps=25, min_samples=25).fit(X, y=None, sample_weight=None)
     df['Cluster'] = clustering.labels_
     df1=df.copy()
     # df1.drop(df1[df1['Cluster'] == -1].index, inplace = True)
@@ -104,7 +114,7 @@ if uploaded_file is not None:
         time = df[df['Cluster']==clusternumber]['Date & Time'].min()
         fig = px.pie(xyz, values='Message', names='Sender', title='Most Active Users in Conversation Started at ' + str(time), hole=0.5)
         if(st.button("Show Conversation " + str(clusternumber))):
-            st.write(get_messages(clusternumber))
+            st.dataframe(get_messages(clusternumber), width=20000)
         st.plotly_chart(fig, figure_options={'layout': {'width': 1000, 'height': 1000}})
 
 
