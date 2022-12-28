@@ -21,8 +21,8 @@ def process_chat_data(chat_data):
     # Iterate through each line of the chat data
     for line in chat_data:
         # Use regular expressions to extract the date and time, sender, and message
-        pattern = r'(\d+/\d+/\d+, \d+:\d+ [ap]m) - ([^:]+): (.*)'
-        pattern = r'(\d+/\d+/\d+, \d+:\d+ [ap]m) - ([^:]+): (.*)'
+        # pattern = r'(\d+/\d+/\d+, \d+:\d+ [ap]m) - ([^:]+): (.*)'
+        pattern = r'(\d+/\d+/\d+, \d+:\d+ [apAP]m) - ([^:]+): (.*)'
 
         # Test the regular expression
         match = re.match(pattern, line.decode('utf-8'))
